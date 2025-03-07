@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Gallery</h2>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="txtphoto" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="btnsubmit" class="btn btn-success" value="submit">
+                    </td>
+                </tr>
+            </table>
+            <h1></h1>
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <td>SI No</td>
+                    <td>Photo </td>
+                    <td>Action</td>
+                </tr>
+                {% for i in gallery %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img src="{{i.gallery_photo.url}}" width="50" height="50"></td>
+                    <td><a href="{% url 'Designer:delgallery' i.id %}" class="btn btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            </table>
+    </center>
+    </form>
+
+</body>
+
+</html>

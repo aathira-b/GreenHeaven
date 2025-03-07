@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>From Date</td>
+            <td><input type="date" name="fdate" id="fdate" onchange="getReport()"></td>
+            <td>To Date</td>
+            <td><input type="date" name="tdate" id="tdate" onchange="getReport()"></td>
+        </tr>
+    </table>
+    <div id="result"></div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function getReport() {
+        // var did = $(this).val();
+        var fdate = document.getElementById("fdate").value
+        var tdate = document.getElementById("tdate").value
+        var ur = "{% url 'Shop:ajaxreport' %}"
+        $.ajax({
+            url: ur,
+            data: { fdate: fdate,tdate: tdate },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    }
+</script>

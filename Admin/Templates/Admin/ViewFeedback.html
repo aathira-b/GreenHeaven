@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+</head>
+<body>
+    <div class="container">
+        <h2>View Feedback</h2>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table  class="table table-bordered table-hover"> 
+                <tr>
+                    <td>SI NO</td>
+                    <td>User Name</td>
+                    <td>Feedback</td>
+                    <td>Date</td>
+                </tr>
+                {% for i in feedback %}
+                <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>{{i.user.user_name}}</td>
+                    <td>{{i.feedback_content}}</td>
+                    <td>{{i.feedback_date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        
+    </form>
+    </div>
+            
+    
+</body>
+</html>

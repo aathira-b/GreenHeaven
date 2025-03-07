@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <center>
+</head>
+<body>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>            
+        <tr>
+            <td>fname</td>
+         <td><input type="text"  name="firstname" required></td>
+        </tr>
+        <tr>
+            <td>lname</td>
+         <td><input type="text"  name="lastname" required></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+                <td><input type="radio" name="gender" value="male" required>male
+               <input type="radio" name="gender" value="female" required>female
+           </td>
+           </tr>
+           <tr>
+            <td>Address</td>
+            <td>
+               <textarea   name="address" rows="2" cols="16" required></textarea>
+           </td>
+           </tr>
+           <tr>
+            <td>Contact</td>
+            <td><input type="text"  name="contact" required></td>
+           </tr>
+           <tr>
+            <td>District</td>
+            <td>
+                <select name="District">
+                  <option value="sel">--select--</option>
+                  <option value="Iddukki">Iddukki</option>
+                  <option value="Kollam">Kollam</option>
+                  <option value="Kannur">Kannur</option>
+                  <option value="Eranakulam">Eranakulam</option>
+                  <option value="Kasargod">Kasargod</option>
+               </select>	     
+             </td>
+           </tr>
+           <tr>
+            <td colspan="2" align="center">
+               <input type="submit"  name="btnsubmit" value="Submit">
+</td>
+</tr>
+</center>
+</table>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>{{name}}</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{gender}}</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>{{address}}</td>
+    </tr>
+    <tr>
+        <td>Contact</td>
+        <td>{{contact}}</td>
+    </tr>
+    <tr>
+        <td>District</td>
+        <td>{{district}}</td>
+    </tr>
+</table>
+</form>      
+</body>
+</html>

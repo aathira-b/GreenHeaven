@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Profile</title>
+</head>
+<body>
+    <div class="container">
+        <table>
+        <h2>Designer Profile </h2>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class="table table-bordered table-hover">
+           <td colspan="2" align="center"> <img src="{{designer.designer_photo.url}}"  width="150" height="150">   
+        <tr>
+            <td>Name:</td>
+            <td>{{designer.designer_name}}</td>
+         </tr>
+         
+        <tr>
+            <td>Email:</td>
+            <td>{{designer.designer_email}}</td>
+        </tr>
+        <tr>
+            <td>Contact:</td>
+            <td>{{designer.designer_contact}}</td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>{{designer.designer_address}}</td>
+        </tr>
+        <tr>
+            <td>District:</td>
+            <td>{{designer.place.district.district_name}}</td>
+        </tr>
+        <tr>
+            <td>Place:</td>
+            <td>{{designer.place.place_name}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                    <a href="{% url 'Designer:designeredit'%}" class="btn btn-primary">Edit Profile</a> <a href="{% url 'Designer:changeDpassword'%}" class="btn btn-info">Change Password</a> 
+                </td>
+            </tr>
+    </table>
+    </form>
+</body>
+</html>

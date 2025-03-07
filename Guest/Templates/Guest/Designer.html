@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer</title>
+</head>
+
+<body>
+    <form action="" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <center>
+            <table border="2">
+                <h2>DESIGNER</h2>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="txtname" placeholder="Enter the Name" pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"  required></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" name="txtmail" placeholder="Enter the Email" required></td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td><input type="text" name="txtcontact" placeholder="Enter the Contact" pattern="[6-9]{1}[0-9]{9}"  title="Phone number with 6-9 and remaing 9 digit with 0-9"  required></td>
+                </tr>
+                <td>Address</td>
+                <td>
+                    <textarea name="txtaddress" placeholder="Enter the Address" rows="2" cols="16" required></textarea>
+                </td>
+                </tr>
+                <tr>
+                    <td>District</td>
+                    <td>
+                        <select name="District" id="District">
+                            <option value="sel">--select--</option>
+                            {% for i in district %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                <tr>
+                    <td>Place</td>
+                    <td>
+                        <select name="Place" id="Place" required>
+                            <option value="sel">--select--</option>
+                        </select>
+                    </td>
+                </tr>
+                <td>Photo</td>
+                <td><input type="file" name="txtphoto" required></td>
+                </tr>
+                <tr>
+                    <td>Proof</td>
+                    <td><input type="file" name="txtproof" required></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="txtpass"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="btnsubmit" value="submit">
+                    </td>
+                </tr>
+                </td>
+    </form>
+    </table>
+    </center>
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#District").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'Guest:ajaxplace' %}"
+        $.ajax({
+            url: ur,
+            data: { did: did, },
+            success: function (data) {
+                $("#Place").html(data);
+            },
+        });
+    });
+</script>

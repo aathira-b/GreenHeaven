@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <td>#</td>
+                <td>Product</td>
+                <td>Photo</td>
+                <td>Amount</td>
+                <td>Advance Amount</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            {% for i in cart %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.product.product_name}}</td>
+                <td><img src="{{i.product.product_photo.url}}" width="100" height="100" alt=""></td>
+                <td>{{i.booking.booking_adv_amount}}</td>
+                <td>{{i.booking.booking_totalamount}}</td>
+                <td>{{i.booking.booking_date}}</td>
+                <td>
+
+                    {% if i.booking.booking_status == 1 and i.cart_status == 1 %}
+                    <span style="color: red;">Payment Pending..</span>
+                    <a href="{% url 'User:payment' i.booking.id %}">Pay</a>
+                    {% elif i.booking.booking_status == 2 and i.cart_status == 2 %}
+                    <span style="color: greenyellow;">Payment Completed..</span> | <a href="{% url 'User:bill' i.id %}">Bill</a>
+                    <a href="{% url 'User:chatpage' i.product.shop.id %}">Chat</a>
+                    Order Packed | <a href="{% url 'User:bill' i.id %}">Bill</a>
+                    
+                    {% elif i.booking.booking_status == 2 and i.cart_status == 3 %}
+                    Order Shipped | <a href="{% url 'User:bill' i.id %}">Bill</a>
+
+                    {% elif i.booking.booking_status == 2 and i.cart_status == 4 %}
+                    Order Delivered | <a href="{% url 'User:bill' i.id %}">Bill</a>
+
+                    {% elif i.booking.booking_status == 2 and i.cart_status == 5 %}
+                    <span style="color: red;">Order Completed</span>
+                    <a href="{% url 'User:rating' i.product.id %}">Rating</a>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        </center>
+</body>
+
+</html>

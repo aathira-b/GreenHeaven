@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Request</title>
+</head>
+<body>
+   <div class="container">
+        <h2>My Request</h2>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table class="table table-bordered table-hover"> 
+                <tr>
+                    <td>SI NO</td>
+                    <td>Request Date</td>
+                    <td>To Date</td>
+                    <td>Work</td>
+                    <td>Designer</td>
+                    <td>Amount</td>
+                    <td>Status</td>
+                </tr>
+                {% for i in designerequest %}
+                <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{i.designrequest_date}}</td>
+                <td>{{i.designrequest_todate}}</td>
+                <td><img src="{{i.work.work_photo.url}}" width="50" height="50"></td>
+                <td>{{i.work.designer.designer_name}}</td>
+                <td>{{i.designerequest_amount}}</td>
+                <td colspan="2">
+                    {% if i.designrequest_status == 0 %}
+                    <span style="color: yellow;">Pending...</span>
+                    
+                  
+                    {% elif i.designrequest_status == 1 %}
+                    <span style="color: green;">Verifed</span>
+                    <a href="{% url 'User:chatd' i.work.designer.id %}" class="btn btn-danger">Chat</a>
+
+                    {% elif i.designrequest_status == 2 %}
+                    <span style="color: red;">Reject</span>
+
+                    {% endif %}
+                
+                </td>
+                </tr>
+                {% endfor %}
+            </table>
+    
+    </form>
+</div>
+    
+</body>
+</html>

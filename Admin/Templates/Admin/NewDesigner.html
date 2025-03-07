@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewDesiner</title>
+</head>
+<body>
+    <div class="container">
+        <h2>New Desiner</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table  class="table table-bordered table-hover">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Contact</td>
+                <td>Address</td>
+                <td>District</td>
+                <td>place</td>
+                <td colspan="2">Photo</td>
+                <td colspan="2">Proof</td>
+                <td colspan="2" align="center">Action</td>
+                <td>Status</td>
+            </tr>
+            {% for i in designer %}
+
+            <tr>  
+                <td>{{i.designer_name}}</td>
+                <td>{{i.designer_email}}</td>
+                <td>{{i.designer_contact}}</td>
+                <td>{{i.designer_address}}</td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td colspan="2"><img src="{{i.designer_photo.url}}"  width="150" height="150" ></td> 
+                <td colspan="2"><img src="{{i.designer_proof.url}}"  width="150" height="150" ></td> 
+                <td colspan="2"><a href="{% url 'Admin:designeraccept' i.id %}" class="btn btn-outline-success">Accept</a><br><br><a href="{% url 'Admin:designerreject' i.id %}" class="btn btn-outline-danger">Reject</a></td>
+                <td align="center">{{i.designer_status}}</td>
+               </tr>
+            
+        {% endfor %}
+        <a href="{% url 'Admin:accepteddesigner' %}">Accepted Designers</a>|<a href="{% url 'Admin:rejecteddesigner' %}">Rejected Designers</a>
+        </table>
+        
+    </form>
+</div>
+</table>
+    
+</body>
+
+</html>

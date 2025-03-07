@@ -1,0 +1,20 @@
+<table cellpadding="10" border="1">
+    <tr>
+        <td>#</td>
+        <td>User</td>
+        <td>Date</td>
+        <td>Amount</td>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.user.user_name}}</td>
+        <td>{{i.booking_date}}</td>
+        <td>{{i.booking_amount}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3">Total</td>
+        <td>{{total}}</td>
+    </tr>
+</table>

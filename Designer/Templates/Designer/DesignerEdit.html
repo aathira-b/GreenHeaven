@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Profile</h2>
+        
+            <form action="" method="POST" >
+          {% csrf_token %}
+        <table  class="table table-bordered table-hover">
+            <tr>
+                <td>Name</td>
+             <td><input type="text"  name="txtname" placeholder="Enter the Name"  pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"  value="{{designer.designer_name}}" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+             <td><input type="email"  name="txtemail" value="{{designer.designer_email}}" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+             <td><input type="text"  name="txtcontact" pattern="[6-9]{1}[0-9]{9}" 
+                title="Phone number with 6-9 and remaing 9 digit with 0-9" value="{{designer.designer_contact}}" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>
+                    <textarea   name="address" rows="2" cols="16"  required>{{designer.designer_address}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                   <input type="submit"  name="btnsubmit"  class="btn btn-success" value="Edit">
+    </td>
+    </tr>
+
+  </table>  
+</div>
+</body>
+</html>

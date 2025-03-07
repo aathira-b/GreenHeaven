@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangePass</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Change Password</h2>
+        
+            <form action="" method="POST"> 
+        {% csrf_token %}
+        <table class="table table-bordered table-hover">
+            <tr>
+                <td>Old Password</td>
+             <td><input type="password" placeholder="Enter the old Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="txtpwd" required/></td>
+            </tr>
+            <tr>
+                <td>New Password</td>
+             <td><input type="password" placeholder="Enter the New Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="txtpass" required/></td>
+            </tr>
+            <tr>
+                <td>Re-Type Password</td>
+             <td><input type="password" placeholder="Enter Retype Password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"name="txtpassword" required/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                   <input type="submit"  name="btnsubmit" class="btn btn-success" value="Change password">
+                   <input type="submit"  name="btnsubmit" class="btn btn-danger" value="Cancel">
+    </td>
+    </tr>
+</form>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+    </script>
+    {% endif %}
+        </table>
+    </div>
+   
+</body>
+</html>
+

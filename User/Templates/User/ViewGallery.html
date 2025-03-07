@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>viewgallery</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Gallery</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table class="table table-bordered table-hover"> 
+                {% for i in gallery %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><img src="{{i.gallery_photo.url}}" width="50" height="50"></td>
+                        
+                        </tr>
+                        {% endfor %}
+                        </table>
+                   
+ 
+        </form>
+    </div>
+</body>
+</html>

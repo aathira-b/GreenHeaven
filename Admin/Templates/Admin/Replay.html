@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2> Give Replay</h2>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table  class="table table-bordered table-hover"> 
+                <tr>
+                    <td>Replay</td>
+                    <td>
+                        <textarea name="replay" rows="2" cols="16" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="btnsend" value="Send" class="btn btn-success">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+
+</body>
+
+</html>

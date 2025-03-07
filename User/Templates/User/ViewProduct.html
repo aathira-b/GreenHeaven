@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .text-warning {
+            color: orange;
+        }
+        /* .card {
+            padding: 20px;
+            box-shadow: 0 0 10px gray;
+            width: fit-content;
+            border-radius: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        } */
+        .card {
+        padding: 20px;
+        box-shadow: 0 0 10px gray;
+        width: fit-content;
+        border-radius: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        margin: 20px; /* Add margin for spacing between cards */
+    }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .select {
+            margin-top: 16px;
+        }
+        select {
+            padding: 12px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container">
+        <div align="center" class="select">
+            Category 
+            <select name="sel_category" id="sel_category" onchange="searchproduct()">
+                <option value="">--Select--</option>
+                {% for i in category %}
+                <option value="{{i.id}}">{{i.category_name}}</option>
+                {% endfor %}
+            </select>
+            Sub Category
+            <select name="sel_subcategory" id="sel_subcategory" onchange="searchproduct()">
+                <option value="">--Select--</option>
+            </select>
+        </div>
+        
+    <div class="main" id="result">
+        
+        {% for i,j in product %}
+        <div class="card">
+            <div><img src="{{i.product_photo.url}}" width="150" alt=""></div>
+            <div>Name :{{i.product_name}}</div>
+            <div>Price :{{i.product_price}}</div>
+            <div>
+                {% for k in ar %} {% if k <= j %} <i class="fa-solid fa-star text-warning"></i>
+                    {% else %}
+                    <i class="fa-solid fa-star star-light"></i>
+                    {% endif %} {% endfor %}
+            </div>
+            <br>
+            <div>
+                {% if i.total_stock == 0 %}
+                <span style="color: red;">Out Of Stock</span>
+                {% else %}
+                <a href="{% url 'User:Addcart' i.id %}" class="btn btn-primary">Add To Cart</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- <div align="center">
+        <a href="{% url 'User:Mycart' %}" class="btn btn-success">My Cart</a>
+
+    </div> -->
+
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'User:viewproduct' %}"
+    </script>
+    {% endif %}
+</body>
+</div>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_category").change(function () {
+        var cid = $(this).val();
+        var ur = "{% url 'Shop:ajaxsub' %}"
+        $.ajax({
+            url: ur,
+            data: { cid: cid, },
+            success: function (data) {
+                $("#sel_subcategory").html(data);
+            },
+        });
+    });
+    function searchproduct() {
+        var cid = document.getElementById("sel_category").value
+        var sid = document.getElementById("sel_subcategory").value
+       
+        // console.log(sid);
+        var ur = "{% url 'User:ajaxsearchproduct' %}"
+        $.ajax({
+            url: ur,
+            data: { cid: cid,sid: sid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    }
+</script>

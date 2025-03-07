@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replayed complaints</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Replayed User Complaint</h2>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table  class="table table-bordered table-hover"> 
+                <tr>
+                    <td>SI NO</td>
+                    <td>Complaint Title</td>
+                    <td>content</td>
+                    <td>Date</td>
+                    <td>User</td>
+                    <td>Replay</td>
+                </tr>
+                {% for i in replayedusercomplaint %}
+                <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>{{i.complaint_title}}</td>
+                    <td>{{i.complaint_description}}</td>
+                    <td>{{i.complaint_date}}</td>
+                    <td>{{i.user.user_name}}</td>
+                    <td>{{i.complaint_replay}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h2>Replayed Designer Complaints</h2>
+            <table  class="table table-bordered table-hover"> 
+                <tr>
+                    <td>SI NO</td>
+                    <td>Complaint Title</td>
+                    <td>content</td>
+                    <td>Date</td>
+                    <td>Designer</td>
+                    <td>Replay</td>
+                </tr>
+                {% for i in designercomplaint %}
+                <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>{{i.complaint_title}}</td>
+                    <td>{{i.complaint_description}}</td>
+                    <td>{{i.complaint_date}}</td>
+                    <td>{{i.desginer.designer_name}}</td>
+                    <td>{{i.complaint_replay}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h2>Replayed Shop Complaints</h2>
+            <table  class="table table-bordered table-hover"> 
+                <tr>
+                    <td>SI NO</td>
+                    <td>Complaint Title</td>
+                    <td>content</td>
+                    <td>Date</td>
+                    <td>Shop</td>
+                    <td>Replay</td>
+                </tr>
+                {% for i in shopcomplaint %}
+                <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>{{i.complaint_title}}</td>
+                    <td>{{i.complaint_description}}</td>
+                    <td>{{i.complaint_date}}</td>
+                    <td>{{i.shop.shop_name}}</td>
+                    <td>{{i.complaint_replay}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+    </form>
+            
+    
+</body>
+</html>

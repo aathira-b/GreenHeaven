@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V15</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form-title" style="background-image: url(images/bg-01.jpg);">
+					<span class="login100-form-title-1">
+						Sign In
+					</span>
+				</div>
+
+				<form action="" method="POST" enctype="multipart/form-data" class="login100-form validate-form">
+                    {% csrf_token %}
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+						<span class="label-input100">Name</span>
+						<input class="input100" type="text" name="txtname"   pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"placeholder="Enter Name">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="email"  name="txtemail" placeholder="Enter Email">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Contact</span>
+						<input class="input100" type="text" name="txtcontact"   pattern="[6-9]{1}[0-9]{9}"  title="Phone number with 6-9 and remaing 9 digit with 0-9" placeholder="Enter Phone Number">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Address</span>
+						<textarea class="input100"   name="address" placeholder="Enter Address"></textarea>
+						<span class="focus-input100"></span>
+					</div>
+                     <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">District</span>
+						 
+                        <select  class="input100"  name="District" id="District" required>
+                            <option value="sel">--select--</option>
+                            {% for i in district %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                    </select>
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Place</span>
+						<select  name="Place" id="Place" required>
+                            <option value="sel">--select--</option>
+                </select>
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Photo</span>
+						<input class="input100" type="file"  name="txtphoto" ></textarea>
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" name="pass"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter Password">
+						<span class="focus-input100"></span>
+					</div>
+
+					
+					
+                    
+					<div class="container-login100-form-btn"> 
+						<button class="login100-form-btn">
+						submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#District").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'Guest:ajaxplace' %}"
+        $.ajax({
+            url: ur,
+            data: { did: did, },
+            success: function (data) {
+                $("#Place").html(data);
+            },
+        });
+    });
+</script> 
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <center>
+        <h2>Register </h2>
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="5">        
+        <tr>
+            <td>Name</td>
+         <td><input type="Name" placeholder="Enter the Name" pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"  name="txtname" required/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="email" placeholder="Enter the Email"  name="txtemail" required/></td>
+         </tr>
+         <tr>
+            <td>Contact</td>  
+            <td><input type="text" placeholder="Enter the Number"  pattern="[6-9]{1}[0-9]{9}"  title="Phone number with 6-9 and remaing 9 digit with 0-9"  name="txtcontact" required/></td>
+         </tr>
+         <tr>
+            <td>Address</td>
+            <td>
+               <textarea   name="address" placeholder="Enter the Address" rows="2" cols="16" required></textarea>
+       </td>
+    </tr>
+    
+    <tr>
+     <td>District</td>
+     <td>
+        <select name="District" id="District" required>
+            <option value="sel">--select--</option>
+            {% for i in district %}
+            <option value="{{i.id}}">{{i.district_name}}</option>
+            {% endfor %}
+    </select>
+    </td>
+    </tr>
+        <tr>
+        <td>Place</td>
+           <td>
+              <select name="Place" id="Place" required>
+                <option value="sel">--select--</option>
+    </select>
+     </td>
+     </tr>
+     <tr>
+        <td>Photo</td>
+            <td><input type="file"   name="txtphoto" required></td>
+</tr>
+<tr>
+    <td>Password</td>
+ <td><input type="password" placeholder="Enter the password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="pass" required></td>
+</tr>
+<tr>
+    <td colspan="2" align="center">
+       <input type="submit"  name="btnsubmit" value="Register">
+</td>
+</tr>
+        </table>
+    </center>
+
+
+    </form>    
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#District").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'Guest:ajaxplace' %}"
+        $.ajax({
+            url: ur,
+            data: { did: did, },
+            success: function (data) {
+                $("#Place").html(data);
+            },
+        });
+    });
+</script> -->
