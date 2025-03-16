@@ -50,4 +50,7 @@ path('starrating/',views.starrating,name="starrating"),
     path('ajaxsearchproduct/',views.ajaxsearchproduct,name="ajaxsearchproduct"),
 
     path("bill/<int:id>", views.bill, name="bill"),
+
+
+
 ]

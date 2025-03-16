@@ -178,5 +178,9 @@ def ajaxreport(request):
           bdata = tbl_booking.objects.filter(id__in=bkid)
      total = 0
      for p in bdata:
-          total = total + float(p.booking_amount)
+          total = total + float(p.booking_totalamount)
      return render(request,"Shop/AjaxReport.html",{"data":bdata,"total":total})
+
+
+
+   

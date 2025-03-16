@@ -8,6 +8,7 @@ urlpatterns = [
     path('designer/', views.designer, name='designer'),
     path('ajaxplace/', views.ajaxplace, name='ajaxplace'),
     path('shopreg/', views.shopreg, name='shopreg'),
+    path('index/', views.index, name='index'),
     
 
     ]

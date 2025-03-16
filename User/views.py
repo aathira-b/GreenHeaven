@@ -18,7 +18,7 @@ def homepage(request):
 def myprofile(request):
     if 'uid' in request.session:
          user=tbl_user.objects.get(id=request.session['uid'])
-         return render(request, 'User/MyProfile.html',{ 'user':user})
+         return render(request,'User/MyProfile.html',{'user':user})
     else:
           return redirect('Guest:Login')
 
@@ -463,3 +463,6 @@ def bill(request, id):
      total = book.booking_totalamount
      user = tbl_user.objects.get(id=book.user.id)
      return render(request,"User/Bill.html",{"bill":cartdata,"tot":total,"book":book,'ran':rand,"user":user})
+
+
+

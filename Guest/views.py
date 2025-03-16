@@ -100,3 +100,8 @@ def shopreg(request):
           return redirect("Guest:shopreg")
      else:
           return render(request, 'Guest/ShopRegister.html',{"district":dis})     
+
+
+def index(request):
+     return render(request, 'Guest/index.html' )
+

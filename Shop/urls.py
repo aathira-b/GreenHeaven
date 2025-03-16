@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('report/',views.report,name="report"),
     path('ajaxreport/',views.ajaxreport,name="ajaxreport"),
+    
 
 ]
 
