@@ -28,3 +28,6 @@ class tbl_chat(models.Model):
     
     designer_from=models.ForeignKey(tbl_designer,on_delete=models.CASCADE,related_name='from_designer',null=True)
     designer_to=models.ForeignKey(tbl_designer,on_delete=models.CASCADE,related_name='to_designer',null=True)
+
+    shop_from=models.ForeignKey(tbl_shop,on_delete=models.CASCADE,related_name='from_shop',null=True)
+    shop_to=models.ForeignKey(tbl_shop,on_delete=models.CASCADE,related_name='to_shop',null=True)

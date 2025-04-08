@@ -49,3 +49,14 @@ class tbl_rating(models.Model):
     product=models.ForeignKey(tbl_product,on_delete=models.CASCADE)
     datetime=models.DateTimeField(auto_now_add=True)
 
+class Wishlist(models.Model):
+    user = models.ForeignKey(tbl_user, on_delete=models.CASCADE, related_name='wishlist')
+    product = models.ForeignKey(tbl_product, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')  # Ensure each user can only add a product once to the wishlist.
+
+    def __str__(self):
+        return f"Wishlist of {self.user.username} - {self.product.name}"
+

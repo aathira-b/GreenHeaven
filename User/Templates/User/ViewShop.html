@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewShops</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered table-hover">
+        <h2>Accepted Shops</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class="table table-bordered table-hover">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Contact</td>
+                <td>Address</td>
+                <td>District</td>
+                <td>place</td>
+                <td colspan="2">Photo</td>
+                <td colspan="2">Proof</td>
+                <td colspan="2" align="center">Action</td>
+                
+            </tr>
+            {% for i in shop %}
+            
+            <tr>  
+                <td>{{i.shop_name}}</td>
+                <td>{{i.shop_email}}</td>
+                <td>{{i.shop_contact}}</td>
+                <td>{{i.shop_address}}</td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td colspan="2"><img src="{{i.shop_photo.url}}"  width="150" height="150" ></td> 
+                <td colspan="2"><img src="{{i.shop_proof.url}}"  width="150" height="150" ></td> 
+                <td><a href="{% url 'Admin:shopreject' i.id %}" class="btn btn-danger">Reject</a></td>
+            
+               </tr>
+
+        {% endfor %}
+        </table>
+    </form>
+        </table>
+    </div>
+    
+</body>
+</html>

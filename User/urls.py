@@ -51,6 +51,9 @@ path('starrating/',views.starrating,name="starrating"),
 
     path("bill/<int:id>", views.bill, name="bill"),
 
+    path('add_to_wishlist/<int:product_id>/', views.add_to_wishlist, name='AddToWishlist'),
+    # Remove from wishlist AJAX endpoint
+    # path('remove_from_wishlist/<int:product_id>/', views.remove_from_wishlist, name='RemoveFromWishlist'),
 
 
 ]

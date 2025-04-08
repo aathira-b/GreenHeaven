@@ -134,12 +134,34 @@ def ajaxchat(request):
     
     tbl_chat.objects.create(chat_content=request.POST.get("msg"),chat_time=datetime.now(),shop_from=from_shop,user_to=to_user,chat_file=request.FILES.get("file"))
     return render(request,"Shop/Chat.html")
+#chat designer
+def ajaxchatdesigner(request):
+    from_shop = tbl_shop.objects.get(id=request.session["sid"])
+    to_designer = tbl_designer.objects.get(id=request.POST.get("tid"))
+    
+    tbl_chat.objects.create(chat_content=request.POST.get("msg"),chat_time=datetime.now(),shop_from=from_shop,designer_to=to_designer,chat_file=request.FILES.get("file"))
+    return render(request,"Shop/Chat.html")
+
+def ajaxchatviewdesigner(request):
+    tid = request.GET.get("tid")
+    shop = tbl_shop.objects.get(id=request.session["sid"])
+    chat_data = tbl_chat.objects.filter((Q(shop_from=shop) | Q(shop_to=shop)) & (Q(designer_from=tid) | Q(designer_to=tid))).order_by('chat_time')
+    return render(request,"Shop/ChatView.html",{"data":chat_data,"tid":int(tid)})
+
+#chat designer
+def chatpagedesigner(request,id):
+    designer  = tbl_designer.objects.get(id=id)
+    return render(request,"Shop/Chat.html",{"user":designer})
+
 
 def ajaxchatview(request):
     tid = request.GET.get("tid")
     shop = tbl_shop.objects.get(id=request.session["sid"])
     chat_data = tbl_chat.objects.filter((Q(shop_from=shop) | Q(shop_to=shop)) & (Q(user_from=tid) | Q(user_to=tid))).order_by('chat_time')
     return render(request,"Shop/ChatView.html",{"data":chat_data,"tid":int(tid)})
+
+
+
 
 def clearchat(request):
     tbl_chat.objects.filter(Q(shop_from=request.session["sid"]) | (Q(user_to=request.GET.get("tid")) )).delete()

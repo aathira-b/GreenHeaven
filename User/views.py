@@ -7,6 +7,16 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.db.models import Q
 import random
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Wishlist
+from django.contrib.auth.decorators import login_required
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import tbl_product, Wishlist
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def homepage(request):
@@ -452,7 +462,7 @@ def ajaxsearchproduct(request):
                     # print(parry)
           datas=zip(product,parry)
      return render(request,"User/AjaxSearchProduct.html",{"product":datas,"ar":ar,'category':category})
-    
+
 def bill(request, id):
      rand=random.randint(111111,999999)
      cart = tbl_cart.objects.get(id=id)
@@ -466,3 +476,32 @@ def bill(request, id):
 
 
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from .models import tbl_product, Wishlist
+
+@csrf_exempt  # You can use csrf_protect instead if you prefer
+def add_to_wishlist(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        if not product_id:
+            return JsonResponse({'success': False, 'message': 'Product ID not provided.'}, status=400)
+
+        try:
+            product = get_object_or_404(Product, id=product_id)
+            user = request.user
+
+            # Check if the item is already in the user's wishlist
+            if Wishlist.objects.filter(user=user, product=product).exists():
+                return JsonResponse({'success': False, 'message': 'Item already in wishlist.'})
+
+            # Add the product to the wishlist
+            Wishlist.objects.create(user=user, product=product)
+
+            return JsonResponse({'success': True, 'message': 'Item added to wishlist!'})
+
+        except Product.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Product not found.'})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})

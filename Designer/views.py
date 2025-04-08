@@ -67,7 +67,7 @@ def changeDpassword(request):
 
 def addwork(request):
      if 'did' in request.session:     
-          work = tbl_work.objects.all()
+          work = tbl_work.objects.filter(designer=request.session['did'])
           if request.method=="POST":
                tbl_work.objects.create(work_name=request.POST.get("txtname"),
                                         work_details=request.POST.get("Details"),
@@ -210,3 +210,23 @@ def ajaxchatview(request):
 def clearchat(request):
     tbl_chat.objects.filter(Q(designer_from=request.session["did"]) | (Q(user_to=request.GET.get("tid")) )).delete()
     return render(request,"Designer/ClearChat.html",{"msg":"Chat Deleted Sucessfully...."})
+
+
+#chat designer
+def ajaxchatdesigner(request):
+    to_shop = tbl_shop.objects.get(id=request.session["sid"])
+    from_designer = tbl_designer.objects.get(id=request.POST.get("tid"))
+    
+    tbl_chat.objects.create(chat_content=request.POST.get("msg"),chat_time=datetime.now(),shop_from=from_shop,designer_to=to_designer,chat_file=request.FILES.get("file"))
+    return render(request,"Shop/Chat.html")
+
+def ajaxchatviewdesigner(request):
+    tid = request.GET.get("tid")
+    shop = tbl_shop.objects.get(id=request.session["sid"])
+    chat_data = tbl_chat.objects.filter((Q(designer_from=tid) | Q(designer_to=tid)) & (Q(shop_from=shop) | Q(shop_to=shop))).order_by('chat_time')
+    return render(request,"Shop/ChatView.html",{"data":chat_data,"tid":int(tid)})   
+
+#chat designer
+def chatpagedesigner(request,id):
+    designer  = tbl_designer.objects.get(id=id)
+    return render(request,"Shop/Chat.html",{"user":designer})

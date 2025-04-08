@@ -35,13 +35,14 @@
     
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active"><a href="{% url 'Designer:dprofile' %}" class="nav-link">myprofile</a></li>
-        <li class="nav-item"><a href="{% url 'Designer:addwork' %}" class="nav-link">addwork</a></li>
-        <li class="nav-item"><a href="{% url 'Designer:viewrequest' %}" class="nav-link">viewrequest</a></li>
-        <li class="nav-item"><a href="{% url 'Designer:complaint' %}" class="nav-link">complaint</a></li>
-        <li class="nav-item"><a href="{% url 'Designer:logout' %}" class="nav-link">logout</a></li>
-      </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="{% url 'Shop:sprofile' %}" class="nav-link">myprofile</a></li>
+            <li class="nav-item"><a href="{% url 'Shop:complaint' %}" class="nav-link">complaint</a></li>
+            <li class="nav-item"><a href="{% url 'Shop:product' %}" class="nav-link">product</a></li>
+            <li class="nav-item"><a href="{% url 'Shop:viewbooking' %}" class="nav-link">viewbooking</a></li>
+        <li class="nav-item"><a href="{% url 'Shop:report' %}" class="nav-link">report</a></li>
+        <li class="nav-item"><a href="{% url 'Shop:logout' %}" class="nav-link">Logout</a></li>
+        </ul>
     
   </div>
     <!-- /.navbar-collapse --> 
