@@ -60,8 +60,8 @@
                         <span>Admin</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <!-- <div class="navbar-nav w-100"> -->
+                    <!-- <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a> -->
                     <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -69,7 +69,7 @@
                             <a href="typography.html" class="dropdown-item">Typography</a>
                             <a href="element.html" class="dropdown-item">Other Elements</a>
                         </div> -->
-                    </div>
+                    <!-- </div> -->
                     <!-- <a href="" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a> -->
                     <a href="{% url 'Admin:place' %}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Place</a>
                     <a href="{% url 'Admin:district' %}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>district</a>
@@ -78,6 +78,7 @@
                     <a href="{% url 'Admin:newdesigner' %}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>newdesigner</a>
                     <a href="{% url 'Admin:newshops' %}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>newshops</a>
                     <a href="{% url 'Admin:viewcomplaints' %}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>viewcomplaints</a>
+                    <a href="{% url 'Admin:feedback' %}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>viewfeeback</a>
                     <a href="{% url 'Admin:logout' %}" class="dropdown-item">
                         <i class="ti ti-power"></i>
                         <span>Logout</span>

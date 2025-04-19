@@ -13,7 +13,8 @@ urlpatterns = [
      path('delcomplaint<int:id>/',views.delcomplaint,name='delcomplaint'),
 
 
-    path('viewproduct/',views.viewproduct, name='viewproduct'),   
+    path('viewshop/',views.viewshop, name='viewshop'),   
+    path('viewproduct/<int:id>',views.viewproduct, name='viewproduct'),   
     path('Addcart/<int:pid>',views.Addcart, name='Addcart'),   
     path('Mycart/',views.Mycart, name='Mycart'),   
     path("DelCart/<int:did>", views.DelCart,name="delcart"),
@@ -51,7 +52,7 @@ path('starrating/',views.starrating,name="starrating"),
 
     path("bill/<int:id>", views.bill, name="bill"),
 
-    path('add_to_wishlist/<int:product_id>/', views.add_to_wishlist, name='AddToWishlist'),
+    path('add_to_wishlist/', views.add_to_wishlist, name='AddToWishlist'),
     # Remove from wishlist AJAX endpoint
     # path('remove_from_wishlist/<int:product_id>/', views.remove_from_wishlist, name='RemoveFromWishlist'),
 

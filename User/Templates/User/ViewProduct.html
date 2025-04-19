@@ -47,6 +47,9 @@
             padding: 12px;
             border-radius: 10px;
         }
+        .fill-heart{
+            color: red;
+        }
     </style>
 </head>
 
@@ -91,9 +94,7 @@
                     {% endif %}
         
                     <!-- Wishlist Icon -->
-                    <a href="" id="wishlist-{{i.id}}" onclick="addToWishlist(event,{{i.id}})">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
+                    <i class="fa-solid fa-heart {% if i.wishlist != 0 %} fill-heart {% endif %}" onclick="addwishlist('{{i.id}}','{{id}}')"></i>
                 </div>
             </div>
             
@@ -135,20 +136,23 @@
         var ur = "{% url 'User:ajaxsearchproduct' %}"
         $.ajax({
             url: ur,
-            data: { cid: cid,sid: sid },
+            data: { cid: cid,sid: sid,id: '{{id}}' },
             success: function (data) {
                 $("#result").html(data);
             },
         });
     }
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $("#wishlist").change(function () {
-        var wid = $(this).val();
-        var ur = "{% url 'User:ajaxwishlist' %}"
-    });
-    function searchproduct() {
-        var wid = document.getElementById("wishlist").value
+    function addwishlist(product,id) {
+        var ur = "{% url 'User:AddToWishlist' %}"
+        $.ajax({
+            url: ur,
+            data: { pid: product },
+            success: function (data) {
+                alert(data.msg)
+                if(data){
+                    window.location = "{% url 'User:viewproduct' id %}"
+                }
+            },
+        });
     }
 </script>

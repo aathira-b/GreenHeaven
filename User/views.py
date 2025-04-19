@@ -8,14 +8,6 @@ from datetime import datetime
 from django.db.models import Q
 import random
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from .models import Wishlist
-from django.contrib.auth.decorators import login_required
-
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from .models import tbl_product, Wishlist
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -115,16 +107,19 @@ def delcomplaint(request,id):
      return redirect("User:complaint")     
           
      
+def viewshop(request):
+     shop = tbl_shop.objects.filter(shop_status=1)
+     return render(request,"User/ViewShop.html",{"shop":shop})
 
-
-def viewproduct(request):
+def viewproduct(request, id):
      if "uid" in request.session:
           category=tbl_category.objects.all()
           ar=[1,2,3,4,5]
           parry=[]
           avg=0
-          product = tbl_product.objects.all()
+          product = tbl_product.objects.filter(shop=id)
           for i in product:
+               i.wishlist = Wishlist.objects.filter(user=request.session['uid'],product=i.id).count()
                total_stock = tbl_stock.objects.filter(product=i.id).aggregate(total=Sum('stock_count'))['total']
                total_cart = tbl_cart.objects.filter(product=i.id, cart_status=1).aggregate(total=Sum('cart_qty'))['total']
                # print(total_stock)
@@ -148,7 +143,7 @@ def viewproduct(request):
                     parry.append(0)
                     # print(parry)
           datas=zip(product,parry)
-          return render(request,"User/ViewProduct.html",{"product":datas,"ar":ar,'category':category})
+          return render(request,"User/ViewProduct.html",{"product":datas,"ar":ar,'category':category,"id":id})
      else:
           return redirect('Guest:Login')  
     
@@ -408,7 +403,7 @@ def ajaxsearchproduct(request):
      parry=[]
      avg=0
      if((request.GET.get("sid")!="")):
-          product = tbl_product.objects.filter(subcategory=request.GET.get("sid"))
+          product = tbl_product.objects.filter(subcategory=request.GET.get("sid"),shop=request.GET.get("id"))
           # print(request.GET.get("sid"))
           for i in product:
                total_stock = tbl_stock.objects.filter(product=i.id).aggregate(total=Sum('stock_count'))['total']
@@ -436,7 +431,7 @@ def ajaxsearchproduct(request):
           datas=zip(product,parry)
           # print(datas)
      elif( (request.GET.get("cid")!="")):
-          product = tbl_product.objects.filter(subcategory__category=(request.GET.get("cid")))
+          product = tbl_product.objects.filter(subcategory__category=(request.GET.get("cid")),shop=request.GET.get("id"))
           for i in product:
                total_stock = tbl_stock.objects.filter(product=i.id).aggregate(total=Sum('stock_count'))['total']
                total_cart = tbl_cart.objects.filter(product=i.id, cart_status=1).aggregate(total=Sum('cart_qty'))['total']
@@ -474,34 +469,13 @@ def bill(request, id):
      user = tbl_user.objects.get(id=book.user.id)
      return render(request,"User/Bill.html",{"bill":cartdata,"tot":total,"book":book,'ran':rand,"user":user})
 
-
-
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
-from .models import tbl_product, Wishlist
-
-@csrf_exempt  # You can use csrf_protect instead if you prefer
 def add_to_wishlist(request):
-    if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        if not product_id:
-            return JsonResponse({'success': False, 'message': 'Product ID not provided.'}, status=400)
-
-        try:
-            product = get_object_or_404(Product, id=product_id)
-            user = request.user
-
-            # Check if the item is already in the user's wishlist
-            if Wishlist.objects.filter(user=user, product=product).exists():
-                return JsonResponse({'success': False, 'message': 'Item already in wishlist.'})
-
-            # Add the product to the wishlist
-            Wishlist.objects.create(user=user, product=product)
-
-            return JsonResponse({'success': True, 'message': 'Item added to wishlist!'})
-
-        except Product.DoesNotExist:
-            return JsonResponse({'success': False, 'message': 'Product not found.'})
-
-    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+     msg = ""
+     wishlistcount = Wishlist.objects.filter(user=request.session["uid"],product=request.GET.get("pid")).count()
+     if wishlistcount > 0:
+          Wishlist.objects.get(user=request.session["uid"],product=request.GET.get("pid")).delete()
+          msg = "Removed From WishList"
+     else:
+          Wishlist.objects.create(user=tbl_user.objects.get(id=request.session["uid"]),product=tbl_product.objects.get(id=request.GET.get("pid")))
+          msg = "Add To WishList"
+     return JsonResponse({'msg': msg})
