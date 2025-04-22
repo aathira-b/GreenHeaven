@@ -5,42 +5,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDIT</title>
+    <title>Edit Profile</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f5f7fa, #99e0be);
+        }
+        .form-card {
+            max-width: 600px;
+            margin: auto;
+            margin-top: 60px;
+            padding: 30px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+        }
+        .form-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #21352c;
+        }
+        label {
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Edit Profile</h2>
-        
-            <form action="" method="POST" >
-          {% csrf_token %}
-        <table  class="table table-bordered table-hover">
-            <tr>
-                <td>Name</td>
-             <td><input type="text"  name="txtname" placeholder="Enter the Name"  pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"  value="{{designer.designer_name}}" required></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-             <td><input type="email"  name="txtemail" value="{{designer.designer_email}}" required></td>
-            </tr>
-            <tr>
-                <td>Contact</td>
-             <td><input type="text"  name="txtcontact" pattern="[6-9]{1}[0-9]{9}" 
-                title="Phone number with 6-9 and remaing 9 digit with 0-9" value="{{designer.designer_contact}}" required></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td>
-                    <textarea   name="address" rows="2" cols="16"  required>{{designer.designer_address}}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                   <input type="submit"  name="btnsubmit"  class="btn btn-success" value="Edit">
-    </td>
-    </tr>
-
-  </table>  
-</div>
+        <div class="form-card">
+            <h2 class="form-header">Edit Profile</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="txtname" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="txtname" placeholder="Enter the Name" 
+                        pattern="^[A-Z]+[a-zA-Z ]*$" 
+                        title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter"  
+                        value="{{designer.designer_name}}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="txtemail" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="txtemail" value="{{designer.designer_email}}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="txtcontact" class="form-label">Contact</label>
+                    <input type="text" class="form-control" name="txtcontact" 
+                        pattern="[6-9]{1}[0-9]{9}" 
+                        title="Phone number with 6-9 and remaining 9 digits with 0-9" 
+                        value="{{designer.designer_contact}}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea name="address" class="form-control" rows="3" required>{{designer.designer_address}}</textarea>
+                </div>
+                <div class="text-center">
+                    <input type="submit" name="btnsubmit" class="btn btn-success px-4" value="Edit">
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 {% endblock content %}

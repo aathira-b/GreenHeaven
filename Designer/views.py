@@ -230,3 +230,7 @@ def ajaxchatviewdesigner(request):
 def chatpagedesigner(request,id):
     designer  = tbl_designer.objects.get(id=id)
     return render(request,"Shop/Chat.html",{"user":designer})
+
+def verifieduser(request):
+     viewrequest=tbl_designrequest.objects.filter(designrequest_status=1)
+     return render(request,'Designer/varifiedUser.html',{"request":viewrequest})

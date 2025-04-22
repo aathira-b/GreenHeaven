@@ -26,6 +26,7 @@ path('designeredit/',views.designeredit,name="designeredit"),
     path('ajaxchat/',views.ajaxchat,name="ajaxchat"),
     path('ajaxchatview/',views.ajaxchatview,name="ajaxchatview"),
     path('clearchat/',views.clearchat,name="clearchat"),
+    path('verifieduser/',views.verifieduser,name="verifieduser"),
  
  
  

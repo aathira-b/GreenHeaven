@@ -157,11 +157,11 @@ def Addcart(request,pid):
         cartcount=tbl_cart.objects.filter(booking=bookingdata,product=productdata).count()
         if cartcount>0:
             msg="Already added"
-            return render(request,"User/ViewProduct.html",{'msg':msg})
+            return render(request,"User/Viewshop.html",{'msg':msg})
         else:
             tbl_cart.objects.create(booking=bookingdata,product=productdata)
             msg="Added To cart"
-            return render(request,"User/ViewProduct.html",{'msg':msg})
+            return render(request,"User/Viewshop.html",{'msg':msg})
     else:
         bookingdata = tbl_booking.objects.create(user=userdata)
         tbl_cart.objects.create(booking=tbl_booking.objects.get(id=bookingdata.id),product=productdata)

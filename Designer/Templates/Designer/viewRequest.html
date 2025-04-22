@@ -2,63 +2,100 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>view Request</title>
+    <title>View Request</title>
+    <!-- Bootstrap CSS (optional if already in header.html) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .card {
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .card-title, .text-muted {
+            color: white !important;
+        }
+        .text-muted {
+            opacity: 0.8;
+        }
+        .img-thumbnail {
+            background-color: transparent;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        h2.text-primary {
+            color: #376593 !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2>View Request</h2>
-
+    <div class="container py-5">
+        <h2 class="text-center text-primary mb-4">View Request</h2>
         <form action="" method="POST">
             {% csrf_token %}
-            <table class="table table-bordered table-hover">
-                <tr>
-                    <td>SI No</td>
-                    <td>Request Date</td>
-                    <td>To Date</td>
-                    <td>Work</td>
-                    <td>User</td>
-                    <td colspan="2">Action</td>
-                    <td>Status</td>
-                </tr>
+            
+            <div class="row g-4">
                 {% for i in request %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{i.designrequest_date}}</td>
-                    <td>{{i.designrequest_todate}}</td>
-                    <td><img src="{{i.work.work_photo.url}}"  width="50" height="50"class="img-thumbnail"></td>
-                    <td>{{i.user.user_name}}</td>
-                    <td colspan="2">
-                        {% if i.designrequest_status == 0 %}
-                        <a href="{% url 'Designer:acceptrequest' i.id %}" class="btn btn-success">Accept</a> 
-                        &nbsp;
-                        &nbsp;
-                        <br>
-                        <a href="{% url 'Designer:rejectrequest' i.id %}" class="btn btn-danger">Reject</a>
-                        {% elif i.designrequest_status == 1 %}
-                        <span style="color: green;">Verifed</span>
-                        <a href="{% url 'Designer:chatpage' i.user.id %}" class="btn btn-danger">Chat</a>
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{i.work.work_photo.url}}" width="70" height="70" class="img-thumbnail me-3" alt="Work Image">
+                                <div>
+                                    <h5 class="card-title mb-1">{{ i.user.user_name }}</h5>
+                                    <small class="text-muted">From: {{i.designrequest_date}} To: {{i.designrequest_todate}}</small>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Status:</strong>
+                                {% if i.designrequest_status == 0 %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif i.designrequest_status == 1 %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% elif i.designrequest_status == 2 %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% endif %}
+                            </div>
 
-                        {% elif i.designrequest_status == 2 %}
-                        <span style="color: red;">Reject</span>
-
-                        {% endif %}
-                    
-                    </td>
-                    <td align="center">{{i.designrequest_status}}</td>
-                </tr>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% if i.designrequest_status == 0 %}
+                                    <a href="{% url 'Designer:acceptrequest' i.id %}" class="btn btn-sm btn-success">Accept</a>
+                                    <a href="{% url 'Designer:rejectrequest' i.id %}" class="btn btn-sm btn-danger">Reject</a>
+                                {% elif i.designrequest_status == 1 %}
+                                    <a href="{% url 'Designer:chatpage' i.user.id %}" class="btn btn-sm btn-primary">Chat</a>
+                                {% elif i.designrequest_status == 2 %}
+                                    <span class="text-muted">No further action</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </table>
-        </div>
-    </form>
+            </div>
+        </form>
+    </div>
 
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
 
 {% endblock content %}
-
