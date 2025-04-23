@@ -1,4 +1,4 @@
-{% extends 'Shop/Header.html' %}
+{% extends 'User/Head.html' %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,65 +6,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B7355;
+            --secondary: #A67B5B;
+            --light: #F5E6D3;
+            --dark: #2C1810;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(139, 115, 85, 0.2), rgba(166, 123, 91, 0.3)),
+                url('https://images.unsplash.com/photo-1618219944342-824e40a13285?auto=format&fit=crop&q=100') center/cover fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table tr:first-child {
+            background: rgba(139, 115, 85, 0.8);
+            color: white;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            background: var(--primary);
+            color: white;
+            padding: 0.8em 1.5em;
+            padding-left: 1.2em;
+            display: flex;
+            align-items: center;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.3);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <style>
-        /* From Uiverse.io by adamgiebl */ 
-button {
-  font-family: inherit;
-  font-size: 20px;
-  background: royalblue;
-  color: white;
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-button span {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-
-button svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-button:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
-}
-
-button:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-
-button:hover span {
-  transform: translateX(5em);
-}
-
-button:active {
-  transform: scale(0.95);
-}
-
-@keyframes fly-1 {
-  from {
-    transform: translateY(0.1em);
-  }
-
-  to {
-    transform: translateY(-0.1em);
-  }
-}
-
-    </style>
     <div class="container">
         <h2>Complaint</h2>
 

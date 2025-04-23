@@ -5,142 +5,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint</title>
+    <title>Design Studio Feedback</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #6D5D4B;
+            --secondary: #D9C7B8;
+            --accent: #A38F78;
+            --light: #F8F5F2;
+            --dark: #3E3A36;
+        }
+        
         body {
-            background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');
+            background-image: url('https://images.unsplash.com/photo-1617806118233-18e1de247200?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #333;
+            min-height: 100vh;
         }
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: inherit;
-            filter: blur(8px);
-            z-index: -1;
-        }
-        .complaint-container {
+        
+        .designer-container {
             max-width: 1000px;
-            margin: 30px auto;
-            padding: 25px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 50px auto;
+            padding: 0 15px;
         }
-        .complaint-form {
-            background-color: rgba(255, 255, 255, 0.15);
-            padding: 25px;
-            border-radius: 10px;
+        
+        .header-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
         }
-        .complaint-table {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
+        
+        .header-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .complaint-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: none;
+            margin-bottom: 30px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
         }
-        .table-header {
-            background-color: rgba(13, 110, 253, 0.5) !important;
+        
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-bottom: none;
+        }
+        
+        .form-control, .form-control:focus {
+            border-color: var(--secondary);
+            box-shadow: none;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 10px 30px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .complaint-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .table thead {
+            background: var(--primary);
             color: white;
         }
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        h2 {
-            color: #0d6efd;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: 600;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .btn-success {
-            background-color: rgba(25, 135, 84, 0.7);
-            padding: 8px 25px;
+        
+        .table th {
             font-weight: 500;
-            border: none;
         }
-        .btn-danger {
-            background-color: rgba(220, 53, 69, 0.7);
-            padding: 6px 15px;
-            border: none;
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
-        .table-hover tbody tr:hover {
-            background-color: rgba(13, 110, 253, 0.1) !important;
+        
+        .status-pending {
+            background-color: #FFF3E0;
+            color: #E65100;
         }
-        th, td {
-            background-color: transparent !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+        
+        .status-resolved {
+            background-color: #E8F5E9;
+            color: #2E7D32;
         }
-        .table {
-            --bs-table-bg: transparent;
-            --bs-table-border-color: rgba(255, 255, 255, 0.1);
-            color: inherit;
+        
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
-        .text-muted {
-            color: rgba(0, 0, 0, 0.6) !important;
+        
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--accent);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
         }
     </style>
 </head>
 <body>
-    <div class="complaint-container">
-        <h2>Complaint Management</h2>
-
-        <div class="complaint-form">
-            <h4 class="mb-4 text-primary">Submit New Complaint</h4>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="row mb-3">
-                    <label for="title" class="col-sm-2 col-form-label">Title</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="titile" required>
+    <div class="designer-container">
+        <h1 class="header-title text-center">Design Feedback Portal</h1>
+        
+        <div class="complaint-card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>New Feedback Entry</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label">Feedback Title</label>
+                        <input type="text" class="form-control form-control-lg" name="titile" placeholder="Brief summary of your feedback" required>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="content" class="col-sm-2 col-form-label">Content</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" id="content" name="content" required></textarea>
+                    <div class="mb-4">
+                        <label class="form-label">Detailed Description</label>
+                        <textarea class="form-control" name="content" placeholder="Please describe your feedback in detail..." required></textarea>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <button type="submit" name="btnsend" class="btn btn-success">Send Complaint</button>
+                    <div class="text-end">
+                        <button type="submit" name="btnsend" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Feedback
+                        </button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-
+        
+        <h3 class="mt-5 mb-4"><i class="fas fa-history me-2"></i>Feedback History</h3>
+        
+        {% if designercomplaint %}
         <div class="complaint-table">
-            <h4 class="mb-4 text-primary">Your Complaint History</h4>
             <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead class="table-header">
+                <table class="table table-hover mb-0">
+                    <thead>
                         <tr>
-                            <th>SI No</th>
+                            <th>#</th>
                             <th>Title</th>
-                            <th>Content</th>
-                            <th>Reply</th>
-                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,28 +197,37 @@
                             <td>{{i.complaint_description}}</td>
                             <td>
                                 {% if i.complaint_replay %}
-                                    {{i.complaint_replay}}
+                                    <span class="status-badge status-resolved">
+                                        <i class="fas fa-check-circle me-1"></i> Resolved
+                                    </span>
                                 {% else %}
-                                    <span class="text-muted">No reply yet</span>
+                                    <span class="status-badge status-pending">
+                                        <i class="fas fa-clock me-1"></i> Pending
+                                    </span>
                                 {% endif %}
                             </td>
-                            <td class="text-center">
-                                <a href="{% url 'Designer:deldesignercomplaint' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            <td>
+                                <a href="{% url 'Designer:deldesignercomplaint' i.id %}" class="btn btn-action btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">No complaints submitted yet</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+        {% else %}
+        <div class="complaint-card empty-state">
+            <i class="fas fa-comment-slash"></i>
+            <h4>No Feedback Submitted Yet</h4>
+            <p class="mb-0">Your feedback entries will appear here once submitted</p>
+        </div>
+        {% endif %}
     </div>
 
-    <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 {% endblock content %}

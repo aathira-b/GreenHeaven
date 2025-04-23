@@ -51,7 +51,7 @@ def changepassword(request):
                     if npassword==rpassword:
                          user.user_password=request.POST.get("txtpass")
                          user.save()
-                         return redirect("User:myprofile ")
+                         return redirect("User:myprofile")
                     else:
                          return render(request,'User/ChangePassword.html',{"msg":"Error in Confirm password"})
                else:

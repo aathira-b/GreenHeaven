@@ -1,18 +1,175 @@
-
+{% extends 'User/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Request</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B7355;
+            --secondary: #A67B5B;
+            --light: #F5E6D3;
+            --dark: #2C1810;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --warning: #ffc107;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(139, 115, 85, 0.2), rgba(166, 123, 91, 0.3)),
+                url('https://images.unsplash.com/photo-1618219944342-824e40a13285?auto=format&fit=crop&q=100') center/cover fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table tr:first-child {
+            background: rgba(139, 115, 85, 0.8);
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .table td {
+            padding: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .table img:hover {
+            transform: scale(1.1);
+        }
+
+        .status-pending {
+            color: var(--warning);
+            font-weight: 500;
+        }
+
+        .status-verified {
+            color:rgb(88, 41, 41);
+            font-weight: 500;
+        }
+
+        .status-rejected {
+            color:rgb(83, 54, 54);
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .table td {
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-   <div class="container">
+    <div class="container">
         <h2>My Request</h2>
-
         <form action="" method="POST">
             {% csrf_token %}
-            <table class="table table-bordered table-hover"> 
+            <table class="table">
                 <tr>
                     <td>SI NO</td>
                     <td>Request Date</td>
@@ -24,33 +181,28 @@
                 </tr>
                 {% for i in designerequest %}
                 <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{i.designrequest_date}}</td>
-                <td>{{i.designrequest_todate}}</td>
-                <td><img src="{{i.work.work_photo.url}}" width="50" height="50"></td>
-                <td>{{i.work.designer.designer_name}}</td>
-                <td>{{i.designerequest_amount}}</td>
-                <td colspan="2">
-                    {% if i.designrequest_status == 0 %}
-                    <span style="color: yellow;">Pending...</span>
-                    
-                  
-                    {% elif i.designrequest_status == 1 %}
-                    <span style="color: green;">Verifed</span>
-                    <a href="{% url 'User:chatd' i.work.designer.id %}" class="btn btn-danger">Chat</a>
-
-                    {% elif i.designrequest_status == 2 %}
-                    <span style="color: red;">Reject</span>
-
-                    {% endif %}
-                
-                </td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{i.designrequest_date}}</td>
+                    <td>{{i.designrequest_todate}}</td>
+                    <td><img src="{{i.work.work_photo.url}}" alt="Work Photo"></td>
+                    <td>{{i.work.designer.designer_name}}</td>
+                    <td>{{i.designerequest_amount}}</td>
+                    <td>
+                        {% if i.designrequest_status == 0 %}
+                        <span class="status-pending">Pending...</span>
+                        {% elif i.designrequest_status == 1 %}
+                        <span class="status-verified">Verified</span>
+                        <a href="{% url 'User:chatd' i.work.designer.id %}" class="btn btn-danger">Chat</a>
+                        {% elif i.designrequest_status == 2 %}
+                        <span class="status-rejected">Rejected</span>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
-    
-    </form>
-</div>
-    
+        </form>
+    </div>
 </body>
 </html>
+{% endblock content %}
+

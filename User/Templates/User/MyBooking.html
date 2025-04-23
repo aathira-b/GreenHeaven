@@ -1,60 +1,207 @@
-
+{% extends 'User/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <title>My Bookings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B7355;
+            --secondary: #A67B5B;
+            --light: #F5E6D3;
+            --dark: #2C1810;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(139, 115, 85, 0.2), rgba(166, 123, 91, 0.3)),
+                url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=100') center/cover fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table tr:first-child {
+            background: rgba(139, 115, 85, 0.8);
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .table td {
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+
+        .table img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .table img:hover {
+            transform: scale(1.1);
+        }
+
+        .status-pending {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .status-completed {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 0.2rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-pay {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-bill {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-chat {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
 <body>
     <div class="container">
-        <table class="table table-bordered table-hover">
-            <tr>
-                <td>#</td>
-                <td>Product</td>
-                <td>Photo</td>
-                <td>Amount</td>
-                <td>Advance Amount</td>
-                <td>Date</td>
-                <td>Action</td>
-            </tr>
-            {% for i in cart %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{i.product.product_name}}</td>
-                <td><img src="{{i.product.product_photo.url}}" width="100" height="100" alt=""></td>
-                <td>{{i.booking.booking_adv_amount}}</td>
-                <td>{{i.booking.booking_totalamount}}</td>
-                <td>{{i.booking.booking_date}}</td>
-                <td>
-
-                    {% if i.booking.booking_status == 1 and i.cart_status == 1 %}
-                    <span style="color: red;">Payment Pending..</span>
-                    <a href="{% url 'User:payment' i.booking.id %}">Pay</a>
-                    {% elif i.booking.booking_status == 2 and i.cart_status == 2 %}
-                    <span style="color: greenyellow;">Payment Completed..</span> | <a href="{% url 'User:bill' i.id %}">Bill</a>
-                    <a href="{% url 'User:chatpage' i.product.shop.id %}">Chat</a>
-                    Order Packed | <a href="{% url 'User:bill' i.id %}">Bill</a>
-                    
-                    {% elif i.booking.booking_status == 2 and i.cart_status == 3 %}
-                    Order Shipped | <a href="{% url 'User:bill' i.id %}">Bill</a>
-
-                    {% elif i.booking.booking_status == 2 and i.cart_status == 4 %}
-                    Order Delivered | <a href="{% url 'User:bill' i.id %}">Bill</a>
-
-                    {% elif i.booking.booking_status == 2 and i.cart_status == 5 %}
-                    <span style="color: red;">Order Completed</span>
-                    <a href="{% url 'User:rating' i.product.id %}">Rating</a>
-                    <a href="{% url 'User:bill' i.id %}">Bill</a>
-
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        </center>
+        <h2>My Bookings</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <td>#</td>
+                    <td>Product</td>
+                    <td>Photo</td>
+                    <td>Amount</td>
+                    <td>Advance Amount</td>
+                    <td>Date</td>
+                    <td>Action</td>
+                </tr>
+                {% for i in cart %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.product.product_name}}</td>
+                    <td><img src="{{i.product.product_photo.url}}" width="100" height="100" alt=""></td>
+                    <td>{{i.booking.booking_adv_amount}}</td>
+                    <td>{{i.booking.booking_totalamount}}</td>
+                    <td>{{i.booking.booking_date}}</td>
+                    <td>
+                        {% if i.booking.booking_status == 1 and i.cart_status == 1 %}
+                        <span class="status-pending">Payment Pending..</span>
+                        <a href="{% url 'User:payment' i.booking.id %}" class="btn btn-pay">Pay</a>
+                        {% elif i.booking.booking_status == 2 and i.cart_status == 2 %}
+                        <span class="status-completed">Payment Completed..</span> | <a href="{% url 'User:bill' i.id %}" class="btn btn-bill">Bill</a>
+                        <a href="{% url 'User:chatpage' i.product.shop.id %}" class="btn btn-chat">Chat</a>
+                        Order Packed | <a href="{% url 'User:bill' i.id %}" class="btn btn-bill">Bill</a>
+                        {% elif i.booking.booking_status == 2 and i.cart_status == 3 %}
+                        Order Shipped | <a href="{% url 'User:bill' i.id %}" class="btn btn-bill">Bill</a>
+                        {% elif i.booking.booking_status == 2 and i.cart_status == 4 %}
+                        Order Delivered | <a href="{% url 'User:bill' i.id %}" class="btn btn-bill">Bill</a>
+                        {% elif i.booking.booking_status == 2 and i.cart_status == 5 %}
+                        <span class="status-pending">Order Completed</span>
+                        <a href="{% url 'User:rating' i.product.id %}" class="btn btn-pay">Rating</a>
+                        <a href="{% url 'User:bill' i.id %}" class="btn btn-bill">Bill</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 </body>
-
 </html>
+{% endblock content %}
+

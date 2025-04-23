@@ -6,7 +6,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product </title>
+    <title>Product Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B7355;
+            --secondary: #a26536;
+            --light: #F5E6D3;
+            --dark: #2C1810;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --blur-brown: rgba(128, 101, 75, 0.45);
+            --overlay-bg: rgba(243, 232, 220, 0.4);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(
+                rgba(139, 115, 85, 0.3), 
+                rgba(166, 123, 91, 0.4)
+            ),
+            url('https://images.unsplash.com/photo-1618219944342-824e40a13285?auto=format&fit=crop&q=100') center/cover fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: var(--blur-brown);
+            backdrop-filter: blur(3px);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: rgba(243, 232, 220, 0.15);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            border: 1px solid rgba(165, 142, 119, 0.2);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: rgb(110, 68, 31);
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 1rem 0 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .table {
+            background: rgba(243, 232, 220, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .table td {
+            padding: 1rem;
+            color: var(--dark);
+            vertical-align: middle;
+        }
+
+        .form-control, select, textarea {
+            background: rgba(243, 232, 220, 0.15);
+            border: 1px solid rgba(165, 142, 119, 0.3);
+            border-radius: 8px;
+            padding: 0.8rem;
+            color: var(--dark);
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, select:focus, textarea:focus {
+            background: rgba(243, 232, 220, 0.25);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+            outline: none;
+        }
+
+        .btn-success {
+            background: var(--primary) !important;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: var(--secondary) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 115, 85, 0.2);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            margin-right: 0.5rem;
+        }
+
+        img {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="file"] {
+            background: transparent;
+            border: 1px dashed var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .table-hover tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
