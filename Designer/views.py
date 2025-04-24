@@ -37,7 +37,7 @@ def designeredit(request):
                designer.designer_contact=request.POST.get("txtcontact")
                designer.designer_address=request.POST.get("address")
                designer.save()
-               return redirect("Designer:designeredit")
+               return redirect("Designer:dprofile")
           else:
                return render(request, 'Designer/DesignerEdit.html',{'designer':designer})
      else:
@@ -127,31 +127,7 @@ def rejectrequest(request, id):
     designrequest.designrequest_status = 2
     designrequest.save()
     
-    # Prepare email content
-    user_email = designrequest.user.user_email  # Assuming tbl_user has an email field
-    subject = "Your Design Request Has Been Rejected"
     
-
-
-    message = (
-          f"Dear {designrequest.user.user_name},\n\n"  # Assuming tbl_user has a name field
-          "We regret to inform you that your design request has been rejected. Below are the details of your request:\n\n"
-          f"Request Date: {designrequest.designrequest_date}\n"
-          f"Completion Date: {designrequest.designrequest_todate}\n"
-          f"Amount: {designrequest.designrequest_amount}\n"
-          f"Work Details: {designrequest.work.work_name}\n\n"
-          "If you have any questions or need clarification, please feel free to contact us.\n\n"
-          "We apologize for any inconvenience caused.\n\n"
-          "Best regards,\n"
-          "The Design Team"
-     )
-    from_email = settings.EMAIL_HOST_USER
-    recipient_list = [user_email]
-    
-    # Send the email
-    send_mail(subject, message, from_email, recipient_list)
-    
-    # Redirect to the view request page
     return redirect("Designer:viewrequest")
 
 def acceptrequest(request, id):
@@ -173,7 +149,7 @@ def complaint(request):
                tbl_complaint.objects.create(complaint_title=request.POST.get("titile"),
                complaint_description=request.POST.get("content"),
                desginer=tbl_designer.objects.get(id=request.session['did']))
-               return redirect("Designer:complaint")
+               return redirect("Designer:dhomepage")
           else:
                return render(request,'Designer/Dcomplaint.html',{"designercomplaint":designercomplaint}) 
      else:

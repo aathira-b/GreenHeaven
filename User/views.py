@@ -190,7 +190,7 @@ def Mycart(request):
                     cart = tbl_cart.objects.filter(booking=book)
                     for i in cart:
                          total_stock = tbl_stock.objects.filter(product=i.product.id).aggregate(total=Sum('stock_count'))['total']
-                         total_cart = tbl_cart.objects.filter(product=i.product.id, cart_status=0).aggregate(total=Sum('cart_qty'))['total']
+                         total_cart = tbl_cart.objects.filter(product=i.product.id, cart_status=1).aggregate(total=Sum('cart_qty'))['total']
                          print(total_stock)
                     # print(total_cart)
                          if total_stock is None:

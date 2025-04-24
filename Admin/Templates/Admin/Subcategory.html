@@ -57,5 +57,12 @@
     </tr>
 </body>
 </html>
+{% if msg %}
+    <script>
+    alert("{{msg}}")
+    window.location.href="{% url 'Admin:subcategory' %}"
+    </script>
+
+{% endif %}
 
 {% endblock %}

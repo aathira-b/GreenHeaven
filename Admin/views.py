@@ -64,10 +64,14 @@ def district(request):
     dis=tbl_district.objects.all()
     if request.method=="POST":
         district=request.POST.get("District")
-        tbl_district.objects.create(
-            district_name=district
-        )
-        return render(request,"Admin/District.html",{'msg':"Data Inserted SuccessFully"})
+        DISTRICTCOUNT = tbl_district.objects.filter(district_name__iexact=district).count()
+        if DISTRICTCOUNT > 0:
+            return render(request, 'Admin/District.html', {'msg': "District Already Exists"})
+        else:
+            tbl_district.objects.create(
+                district_name=district
+            )
+            return render(request, 'Admin/District.html', {'msg': "Data Inserted SuccessFully"})
     else:
         return render(request, 'Admin/District.html',{'district':dis})    
     
@@ -143,14 +147,22 @@ def deladminreg(request,id):
     return redirect('Admin:adminregister')
 
 def place(request):
-     place = tbl_place.objects.all()
-     dis = tbl_district.objects.all()
-     if request.method=="POST":
-         district = tbl_district.objects.get(id=request.POST.get("District"))
-         tbl_place.objects.create(place_name=request.POST.get("Place"),
-                                  district=district)
-         return redirect("Admin:place")
-     else:
+    place = tbl_place.objects.all()
+    dis = tbl_district.objects.all()
+    if request.method=="POST":
+
+        place_name = request.POST.get("Place")
+        # Check if the place already exists in the database
+        placecount = tbl_place.objects.filter(place_name__iexact=place_name).count()
+        if placecount > 0:
+            return render(request, 'Admin/Place.html', {'msg': "Place Already Exists"})
+        else:
+            # If the place does not exist, create a new one
+            district = tbl_district.objects.get(id=request.POST.get("District"))  
+            tbl_place.objects.create(place_name=place_name,
+                                    district=district)
+            return redirect("Admin:place")
+    else:
         return render(request, 'Admin/Place.html',{"district":dis,'place':place})
 
 def delplace(request,id):
@@ -169,14 +181,19 @@ def editplace(request, id):
         return render(request, 'Admin/Place.html',{"placedata":place,"district":dis,})   
     
 def subcategory(request):
-     sub = tbl_subcategory.objects.all()
-     cat= tbl_category.objects.all()
-     if request.method=="POST":
-         category = tbl_category.objects.get(id=request.POST.get("category"))
-         tbl_subcategory.objects.create(subcategory_name=request.POST.get("Subcategory"),
-                                  category=category)
-         return redirect("Admin:subcategory")
-     else:
+    sub = tbl_subcategory.objects.all()
+    cat= tbl_category.objects.all()
+    if request.method=="POST":
+        subcategory=request.POST.get("Subcategory")
+        subcount = tbl_subcategory.objects.filter(subcategory_name__iexact=subcategory).count()
+        if subcount > 0:
+            return render(request, 'Admin/Subcategory.html', {'msg': "Subcategory Already Exists"})
+        else:
+            category = tbl_category.objects.get(id=request.POST.get("category"))
+            tbl_subcategory.objects.create(subcategory_name=request.POST.get("Subcategory"),
+                                    category=category)
+            return redirect("Admin:subcategory")
+    else:
         return render(request, 'Admin/Subcategory.html',{"category":cat,'sub':sub})    
      
 def delsub(request,id):

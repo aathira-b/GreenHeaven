@@ -31,7 +31,7 @@ def shopedit(request):
                shop.shop_contact=request.POST.get("txtcontact")
                shop.shop_address=request.POST.get("address")
                shop.save()
-               return redirect("Shop:editshop")
+               return redirect("Shop:sprofile")
           else:
                return render(request, 'Shop/ShopEdit.html',{'shop':shop})
      else:
@@ -103,8 +103,7 @@ def delproduct(request,id):
 def stock(request,id):
       stock=tbl_stock.objects.all()
       if request.method=="POST":
-           tbl_stock.objects.create(stock_count=request.POST.get("stock"),
-                                    product=tbl_product.objects.get(id=id))
+           tbl_stock.objects.create(stock_count=request.POST.get("stock"), product=tbl_product.objects.get(id=id))
       return render(request, 'Shop/AddStock.html',{"stock":stock})
 
 

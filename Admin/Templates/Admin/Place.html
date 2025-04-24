@@ -56,4 +56,10 @@
     </tr>
 </body>
 </html>
+{% if msg %}
+<script>
+    alert("{{msg}}");
+    window.location = "{% url 'Admin:place' %}";
+</script>
+{% endif %}
 {% endblock %}
